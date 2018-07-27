@@ -1,1 +1,2 @@
-/t - Create a tab
+#1 - \t - Create a tab
+echo "Hi\tHello"
