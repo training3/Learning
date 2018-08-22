@@ -1,0 +1,19 @@
+---
+  - name: latest 
+    hosts: atomic
+    become: yes
+    tasks:
+    - name: Check if chronyd is running
+      command: systemctl status chronyd
+      ignore_errors: yes
+      changed_when: false
+      register: chronyd_status
+    
+    - name: Report status of chronyd
+      fail:
+        msg: |
+          Service chronyd is not running.
+          Output of `systemctl status chronyd`:
+          {{ chronyd_status.stdout }}
+          {{ chronyd_status.stderr }}
+      when: chronyd_status | failed
